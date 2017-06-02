@@ -36,6 +36,25 @@ Starting with version `v0.3.0` the proxy also supports being started using docke
 2016/05/18 11:45:35 GET /api/dashboards/db/host-dashboard? 200 18202
 ```
 
+#### Docker on ARM 
+
+If you get an error:
+
+```bash
+# docker run --rm -ti -e USER=[...] -e PASS=[...] -e BASEURL=[...] -p 3000:3000 quay.io/luzifer/grafana-proxy
+...
+standard_init_linux.go:178: exec user process caused "exec format error"
+```
+
+and you are running grafana-aith docker on an ARM processor, you'll need to use Dockerfile.arm:
+
+```bash
+# docker build -t grafana-proxy:arm -f Dockerfile.arm .
+# docker run --rm -ti -e USER=[...] -e PASS=[...] -e BASEURL=[...] -p 3000:3000 grafana-auth:arm
+2016/05/18 11:45:35 GET /dashboard/db/host-dashboard 200 7971
+2016/05/18 11:45:35 GET /api/dashboards/db/host-dashboard? 200 18202
+``
+
 ### Using the `token` parameter
 
 If you want to run the `grafana-proxy` on a public accessible host but do not want everyone to be able to see your dashboard you can add some pseudo security using a shared token:
